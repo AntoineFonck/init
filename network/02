@@ -1,0 +1,3 @@
+ifconfig | grep broadcast | awk '{print $6}'
+
+arp -a | awk '{print $2}' | tr -d "()"
