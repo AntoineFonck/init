@@ -1,0 +1,4 @@
+sudo vim /etc/hosts
+add a new line =
+
+46.19.122.85 intra.42.fr
