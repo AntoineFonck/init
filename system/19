@@ -1,0 +1,3 @@
+(output of the "systemctl list-unit-files --type=service" command)
+
+The name given to those processes is "daemon"
