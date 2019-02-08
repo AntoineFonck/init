@@ -1,36 +1,36 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 USERARRAY=(`users`)
 
 #This script removes a logged in user
 if [ "$#" != "1" ]; then
-	echo "Usage: ./byebye.sh + (logged user to remove)"
+	echo 'Usage: ./byebye + (logged user to remove)'
 	exit 1
 fi
 if [ $(echo ${USERARRAY[@]} | grep -w "$1" | wc -w) != "0" ]; then
 	local choice
-	echo "User was found..."
-	echo ""
-	read -p "Choose soft (1) or harsh (2) delete (WARNING: harsh may lead to unexpected behavior):" choice
+	echo 'User was found...'
+	echo ''
+	read -p 'Choose soft (1) or harsh (2) delete (WARNING: harsh may lead to unexpected behavior):' choice
 	if [ $choice == 1 ]; then
-		echo "killing softly all processes linked to the user..."
+		echo 'killing softly all processes linked to the user...'
 		sudo killall -u $1
-		echo ""
-		echo "deleting softly the user..."
+		echo ''
+		echo 'deleting softly the user...'
 		sudo userdel -r $1
 		exit 0
 	elif [ $choice == 2 ]; then
-		echo "killing harshly all processes linked to the user..."
+		echo 'killing harshly all processes linked to the user...'
 		sudo killall -KILL -u $1
-		echo ""
-		echo "deleting harshly the user..."
+		echo ''
+		echo 'deleting harshly the user...'
 		sudo userdel -f $1
 		exit 0
 	else
-		echo "you chose a wrong option"
+		echo 'you chose a wrong option'
 		exit 1
 	fi
 else
-	echo "User not found in logged in users, please try again"
+	echo 'User not found in logged in users, please try again'
 	exit 0
 fi
