@@ -101,6 +101,23 @@ seven(){
 	pause
 }
 
+eight(){
+	echo 'Your local IP address is...'
+	ifconfig | grep "inet " | grep -v "127.0.0.1" | awk -F" " '{print $2}'
+	echo ''
+	pause
+}
+
+nine(){
+	echo 'Your public IP address is...'
+	curl ifconfig.me
+	echo ''
+	echo ''
+	echo 'If it did not work, simply enter your local router address as an URL in a web browser'
+	echo ''
+	pause
+}
+
 show_menus() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"	
@@ -113,6 +130,8 @@ show_menus() {
 	echo "5. Display default gateway of your routing table"
 	echo "6. Get info about your DNS configuration"
 	echo "7. Display public IP address(es) of desired website"
+	echo "8. Display your local IP address"
+	echo "9. Display your public IP address"
 	echo "40. Exit"
 }
 # read input from the keyboard and take a action
@@ -121,7 +140,7 @@ show_menus() {
 # Exit when user the user select 3 form the menu option.
 read_options(){
 	local choice
-	read -p "Enter choice [ 1 - 3 ]" choice
+	read -p "Enter choice [ 1 - 3 ] " choice
 	case $choice in
 		1) one ;;
 		2) two ;;
@@ -130,6 +149,8 @@ read_options(){
 		5) five ;;
 		6) six ;;
 		7) seven ;;
+		8) eight ;;
+		9) nine ;;
 		40) exit 0;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
