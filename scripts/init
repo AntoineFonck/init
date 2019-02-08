@@ -15,7 +15,7 @@ STD='\033[0;0;39m'
 
 pause(){
 	local stayorgo
-	read -p 'Press only [Enter] key to continue, OR anything else then [Enter] to exit' stayorgo
+	read -p 'Press only [Enter] key to continue, OR anything else then [Enter] to exit: ' stayorgo
 	if [[ $stayorgo == "" ]]; then
 		:
 	else
@@ -56,7 +56,7 @@ four(){
 	echo ''
 	ifconfig -l | grep -o -E "en.|eth.|wlan."
 	echo ''
-	read -p 'Please enter your WI-FI interface name from this list... (choose en1 as default)' interface
+	read -p 'Please enter your WI-FI interface name from this list... (choose en1 as default): ' interface
 	clear
 	echo 'Here is the MAC address of your WI-FI card...'
 	echo ''
@@ -75,16 +75,28 @@ five(){
 
 six(){
 	local yesorno
-	echo 'Here is/are the IP addresses of the DNS server you are using:'
+	echo 'Here is/are the IP address(es) of the DNS server you are using:'
 	echo ''
 	cat /etc/resolv.conf
 	echo ''
-	read -p 'Do you want more information about your DNS configuration? y/n' yesorno
+	read -p 'Do you want more information about your DNS configuration? y/n: ' yesorno
 	if [ "$yesorno" == "y" ]; then
 		echo ''
 		scutil --dns | less
 	else
 		:
+	fi
+	pause
+}
+
+seven(){
+	local website
+	read -p 'Please enter the website you desire to know the public IP address of: ' website
+	if [[ $website == "" ]]; then
+		echo 'You did not give any website, aborting...'
+	else
+		echo 'The public IP address(es) of this website is/are...'
+		nslookup $website | grep 'Address: '
 	fi
 	pause
 }
@@ -100,6 +112,7 @@ show_menus() {
 	echo "4. Display MAC address of your WI-FI card"
 	echo "5. Display default gateway of your routing table"
 	echo "6. Get info about your DNS configuration"
+	echo "7. Display public IP address(es) of desired website"
 	echo "40. Exit"
 }
 # read input from the keyboard and take a action
@@ -116,6 +129,7 @@ read_options(){
 		4) four ;;
 		5) five ;;
 		6) six ;;
+		7) seven ;;
 		40) exit 0;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
