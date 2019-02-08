@@ -15,7 +15,7 @@ STD='\033[0;0;39m'
 
 pause(){
 	local stayorgo
-	read -p "Press only [Enter] key to continue, OR anything else then [Enter] to exit" stayorgo
+	read -p 'Press only [Enter] key to continue, OR anything else then [Enter] to exit' stayorgo
 	if [[ $stayorgo == "" ]]; then
 		:
 	else
@@ -25,63 +25,63 @@ pause(){
 
 one(){
 	clear
-	echo "Here are the available network interfaces on your machine..."
-	echo ""
+	echo 'Here are the available network interfaces on your machine...'
+	echo ''
 	ifconfig -l
-	echo ""
+	echo ''
         pause
 }
  
 two(){
 	clear
-	echo "Your broadcast address is..."
-	echo ""
+	echo 'Your broadcast address is...'
+	echo ''
 	ifconfig | grep broadcast | awk '{print $6}'
-	echo ""
+	echo ''
         pause
 }
 
 three(){
 	clear
-	echo "Here are the IP addresses... (using arp -a)"
-	echo ""
+	echo 'Here are the IP addresses... (using arp -a)'
+	echo ''
 	arp -a | awk '{print $2}' | tr -d "()"
-	echo ""
+	echo ''
 	pause
 }
 
 four(){
 	local interface
-	echo "Here are your interfaces names that are most likely to be your WI-FI interface:"
-	echo ""
+	echo 'Here are your interfaces names that are most likely to be your WI-FI interface:'
+	echo ''
 	ifconfig -l | grep -o -E "en.|eth.|wlan."
-	echo ""
-	read -p "Please enter your WI-FI interface name from this list... (choose en1 as default)" interface
+	echo ''
+	read -p 'Please enter your WI-FI interface name from this list... (choose en1 as default)' interface
 	clear
-	echo "Here is the MAC address of your WI-FI card..."
-	echo ""
+	echo 'Here is the MAC address of your WI-FI card...'
+	echo ''
 	ifconfig $interface | grep ether | tr -d "\t" | awk '{print $2}'
-	echo ""
+	echo ''
 	pause
 }
 
 five(){
-	echo "The default gateway is..."
-	echo ""
+	echo 'The default gateway is...'
+	echo ''
 	netstat -rn | grep -m1 default | awk '{print $2}'
-	echo ""
+	echo ''
 	pause
 }
 
 six(){
 	local yesorno
-	echo "Here is/are the IP addresses of the DNS server you are using:"
-	echo ""
+	echo 'Here is/are the IP addresses of the DNS server you are using:'
+	echo ''
 	cat /etc/resolv.conf
-	echo ""
-	read -p "Do you want more information about your DNS configuration? y/n" yesorno
+	echo ''
+	read -p 'Do you want more information about your DNS configuration? y/n' yesorno
 	if [ "$yesorno" == "y" ]; then
-		echo ""
+		echo ''
 		scutil --dns | less
 	else
 		:
@@ -108,7 +108,7 @@ show_menus() {
 # Exit when user the user select 3 form the menu option.
 read_options(){
 	local choice
-	read -p "Enter choice [ 1 - 3] " choice
+	read -p "Enter choice [ 1 - 3 ]" choice
 	case $choice in
 		1) one ;;
 		2) two ;;
